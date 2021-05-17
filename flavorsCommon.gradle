@@ -1,0 +1,20 @@
+android {
+
+    flavorDimensions "default"
+
+    productFlavors {
+
+        sample {
+            minSdkVersion androidMinSdkVersion
+            targetSdkVersion androidTargetSdkVersion
+            versionName "1.0.0"
+            versionCode 1
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunner 'akh.rates.MockTestRunner'
+            buildConfigField 'int', "VERSION_CODE1", "$versionCode"
+            buildConfigField 'String', 'VERSION_NAME1', "\"$versionName\""
+        }
+
+    }
+
+}

@@ -1,0 +1,115 @@
+ext {
+
+    daggerImplDependency = [
+            dagger2              : daggerLib,
+            dagger2Android       : daggerAndroidLib,
+            dagger2AndroidSupport: daggerAndroidSupportLib
+    ]
+
+    daggerKaptDependency = [
+            dagger2Compiler        : daggerCompilerLib,
+            dagger2AndroidProcessor: daggerAndroidProcessorLib
+    ]
+
+    kotlinImplDependency = [
+            kotlin : kotlinLib,
+            ktxCore: ktxCoreLib
+    ]
+
+    coroutinesImplDependency = [
+            kotlinxCoroutinesCore   : kotlinxCoroutinesCoreLib,
+            kotlinxCoroutinesAndroid: kotlinxCoroutinesAndroidLib,
+    ]
+
+    timberImplDependency = [
+            timber: timberLib
+    ]
+
+    androidxAppCompatImplDependency = [
+            androidxAppcompat: androidxAppcompatLib
+    ]
+
+    dataImplDependency = [
+            gson                 : gsonLib,
+            retrofit             : retrofitLib,
+            retrofitConverterGson: retrofitConverterGsonLib,
+            okhttp3              : okhttp3Lib,
+            okhttp3Logging       : okhttp3LoggingLib,
+            roomRuntime          : room_runtime,
+            roomKtx              : room_ktx
+    ]
+
+    dataKaptDependency = [
+            roomCompiler: room_compiler
+    ]
+
+    domainTestImplDependency = [
+            junit                   : junitLib,
+            mockk                   : mockkLib,
+            androidxLifecycle       : androidxLifecycleLib,
+            kotlinxCoroutinesCore   : kotlinxCoroutinesCoreLib,
+            kotlinxCoroutinesAndroid: kotlinxCoroutinesAndroidLib,
+            kotlinxCoroutinesTest   : kotlinxCoroutinesTestLib,
+            androidxArchCoreTesting : androidxArchCoreTestingLib
+    ]
+
+    presentationImplDependency = [
+            androidxLifecycle         : androidxLifecycleLib,
+            androidxLifecycleViewModel: androidxLifecycleViewModelLib,
+            androidxConstraintlayout  : androidxConstraintlayoutLib,
+            googleAndroidMaterial     : googleAndroidMaterialLib,
+            fragment                  : ktxFragmentLib,
+            viewBindingDelegate       : viewBinding_delegate,
+            navigation_ktx            : fragment_navigation_ktx_lib,
+            navigation_ui_ktx         : fragment_navigation_ui_ktx_lib,
+            androidLegacy             : androidLegacySupLib
+    ]
+
+    cameraImplDependency = [
+            cameraxCore         : camerax_core,
+            cameraxCamera2      : camerax_camera2,
+            cameraxLifeCycle    : camerax_lifecycle,
+            cameraxView         : camerax_view,
+            cameraxExt          : camerax_ext,
+            google_barcode_model: google_barcode_model
+    ]
+
+    recyclerWithAdapterDelegateImplDependency = [
+            androidxRecyclerview         : androidxRecyclerviewLib,
+            adapterDelegates4            : adapterDelegates4Lib,
+            adapterDegates4LibViewBinding: adapterDegates4LibViewBinding,
+    ]
+
+    biometricImplDependency = [
+            biometric: biometric_lib,
+    ]
+
+    lootieImpldependency = [
+            lottie: lottieLib
+    ]
+
+    photoViewImplDependency = [
+            photoView: photoView
+    ]
+
+    glideImplDependency = [
+            glide: glideLib
+    ]
+
+    presentationTestImplDependency = [
+            junit: junitLib
+    ]
+
+    coreImplDependency = [
+            navigation_ktx       : fragment_navigation_ktx_lib,
+            navigation_ui_ktx    : fragment_navigation_ui_ktx_lib,
+            googleAndroidMaterial: googleAndroidMaterialLib,
+            fragment             : ktxFragmentLib
+    ]
+
+    appImplDependency = [
+            googleAndroidMaterial: googleAndroidMaterialLib
+    ]
+
+
+}

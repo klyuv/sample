@@ -1,0 +1,11 @@
+apply from: '../flavorsCommon.gradle'
+
+android {
+
+    productFlavors {
+        sample {
+            applicationId "klyuv.sample"
+        }
+    }
+
+}
