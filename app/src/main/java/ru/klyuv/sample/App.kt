@@ -2,9 +2,10 @@ package ru.klyuv.sample
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import ru.klyuv.core.App
 import ru.klyuv.sample.di.AppComponent
 
-class App : DaggerApplication() {
+class App : DaggerApplication(), App {
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
 

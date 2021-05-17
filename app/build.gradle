@@ -34,6 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -41,10 +45,14 @@ dependencies {
 
     kotlinImplDependency.each { dep -> implementation dep.value }
     androidxAppCompatImplDependency.each { dep -> implementation dep.value }
+    presentationImplDependency.each { dep -> implementation dep.value }
     appImplDependency.each { dep -> implementation dep.value }
     daggerImplDependency.each { dep -> implementation dep.value }
     daggerKaptDependency.each { dep -> kapt dep.value }
 
     implementation project(':core')
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':menu')
 
 }

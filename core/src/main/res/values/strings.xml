@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SampleApp</string>
+
+    <string name="MENU_MENU">Меню</string>
 </resources>

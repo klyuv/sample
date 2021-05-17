@@ -43,6 +43,10 @@ ext {
             roomCompiler: room_compiler
     ]
 
+    androidxLifecycleImplDependency = [
+            androidxLifecycle       : androidxLifecycleLib
+    ]
+
     domainTestImplDependency = [
             junit                   : junitLib,
             mockk                   : mockkLib,
