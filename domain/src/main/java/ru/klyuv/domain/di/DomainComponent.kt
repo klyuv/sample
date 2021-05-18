@@ -4,6 +4,7 @@ import dagger.Component
 import ru.klyuv.core.di.DataToolsProvider
 import ru.klyuv.core.di.DomainToolsProvider
 import ru.klyuv.core.di.MainToolsProvider
+import ru.klyuv.domain.di.module.MenuModule
 import ru.klyuv.domain.di.module.SettingsModule
 import javax.inject.Singleton
 
@@ -14,7 +15,8 @@ import javax.inject.Singleton
         MainToolsProvider::class
     ],
     modules = [
-        SettingsModule::class
+        SettingsModule::class,
+        MenuModule::class
     ]
 )
 interface DomainComponent : DomainToolsProvider {

@@ -2,4 +2,5 @@
     <string name="app_name">SampleApp</string>
 
     <string name="MENU_MENU">Меню</string>
+    <string name="MENU_CAMERA">Сканер штрихкодов</string>
 </resources>

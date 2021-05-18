@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.widget.doAfterTextChanged
+import ru.klyuv.core.common.ui.SingleClickListener
 
 
 fun View.toVisible() {
@@ -94,12 +95,12 @@ fun View.getStringById(@StringRes resId: Int) =
 fun View.getStringById(@StringRes resId: Int, vararg formatArgs: Any?) =
     this.context.getString(resId, *formatArgs)
 
-//fun View.setOnSingleClickListener(intervalMs: Long = 1000, click: (View) -> Unit) {
-//    val singleClickListener = SingleClickListener(intervalMs) {
-//        click(it)
-//    }
-//    setOnClickListener(singleClickListener)
-//}
+fun View.setOnSingleClickListener(intervalMs: Long = 1000, click: (View) -> Unit) {
+    val singleClickListener = SingleClickListener(intervalMs) {
+        click(it)
+    }
+    setOnClickListener(singleClickListener)
+}
 
 fun TextView.setUnderlined(underlined: Boolean) {
     paintFlags =
