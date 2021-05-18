@@ -3,6 +3,7 @@ package ru.klyuv.sample.di
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import ru.klyuv.barcode.di.BarcodeComponent
 import ru.klyuv.core.di.DataToolsProvider
 import ru.klyuv.core.di.DomainToolsProvider
 import ru.klyuv.core.di.MainToolsProvider
@@ -21,7 +22,8 @@ import javax.inject.Singleton
         MainToolsProvider::class,
         DataToolsProvider::class,
         DomainToolsProvider::class,
-        MenuComponent::class
+        MenuComponent::class,
+        BarcodeComponent::class
     ],
     modules = [
         AndroidInjectionModule::class,
@@ -43,6 +45,8 @@ interface AppComponent : AndroidInjector<App> {
 
         fun menu(menuComponent: MenuComponent): Builder
 
+        fun barcode(barcodeComponent: BarcodeComponent): Builder
+
         fun build(): AppComponent
 
     }
@@ -63,11 +67,15 @@ interface AppComponent : AndroidInjector<App> {
                 val menuComponent =
                     MenuComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
 
+                val barcodeComponent =
+                    BarcodeComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
+
                 return DaggerAppComponent.builder()
                     .main(mainToolsProvider = mainToolsProvider)
                     .data(dataToolsProvider = dataToolsProvider)
                     .domain(domainToolsProvider = domainToolsProvider)
                     .menu(menuComponent = menuComponent)
+                    .barcode(barcodeComponent = barcodeComponent)
                     .build()
             }
         }

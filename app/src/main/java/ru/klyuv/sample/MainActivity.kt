@@ -50,7 +50,8 @@ class MainActivity : BaseActivity(){
         observe(controller) {
             it.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.menuFragment -> showBottomNav()
+                    R.id.menuFragment,
+                    R.id.barcodeListFragment -> showBottomNav()
                     else -> hideBottomNav()
                 }
             }

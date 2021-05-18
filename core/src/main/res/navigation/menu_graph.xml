@@ -7,6 +7,26 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="ru.klyuv.menu.presentation.MenuFragment"
-        android:label="fragment_menu" />
+        android:label="fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_barcodeListFragment"
+            app:destination="@id/barcodeListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="ru.klyuv.barcode.presentation.camera.CameraFragment"
+        android:label="fragment_camera"
+        />
+
+    <fragment
+        android:id="@+id/barcodeListFragment"
+        android:name="ru.klyuv.barcode.presentation.BarcodeListFragment"
+        android:label="BarcodeFragment"
+        >
+        <action
+            android:id="@+id/action_barcodeListFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
 
 </navigation>

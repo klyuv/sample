@@ -3,4 +3,10 @@
 
     <string name="MENU_MENU">Меню</string>
     <string name="MENU_CAMERA">Сканер штрихкодов</string>
+
+    <string name="attention">Внимание!</string>
+    <string name="cancel">Отмена</string>
+    <string name="settings">Настройки</string>
+
+    <string name="camera_error_permission_message">Приложению необходим доступ к камере.\nПредоставить доступ можно в настройках.</string>
 </resources>

@@ -1,6 +1,7 @@
 package ru.klyuv.menu.presentation
 
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
@@ -9,6 +10,7 @@ import ru.klyuv.core.common.extensions.getViewModel
 import ru.klyuv.core.common.extensions.observe
 import ru.klyuv.core.common.ui.BaseFragment
 import ru.klyuv.core.model.MainMenuItem
+import ru.klyuv.core.model.MainMenuItemId
 import ru.klyuv.core.model.MenuItem
 import ru.klyuv.core.model.MenuSeparatorItem
 import ru.klyuv.menu.R
@@ -55,7 +57,14 @@ class MenuFragment: BaseFragment() {
 
     private fun onMenuClick(item: MainMenuItem) {
         when (item.id) {
+            MainMenuItemId.CAMERA_BARCODE -> openBarcodeListFragment()
             else -> { }
         }
+    }
+
+    private fun openBarcodeListFragment() {
+        findNavController().navigate(
+            MenuFragmentDirections.actionMenuFragmentToBarcodeListFragment()
+        )
     }
 }
