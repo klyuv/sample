@@ -27,6 +27,7 @@ import ru.klyuv.barcode.common.aspectRatio
 import ru.klyuv.barcode.databinding.FragmentCameraBinding
 import ru.klyuv.core.common.extensions.*
 import ru.klyuv.core.common.ui.BaseDialogFullScreenFragment
+import ru.klyuv.core.model.BarcodeModel
 import ru.klyuv.core.model.state.CameraHolderState
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
@@ -225,7 +226,7 @@ class CameraFragment : BaseDialogFullScreenFragment() {
         viewBinding.overlay.toGone()
     }
 
-    private fun sendCode(barcode: String) {
+    private fun sendCode(barcode: BarcodeModel) {
         if (this@CameraFragment.isVisible) {
             imageAnalyzer?.clearAnalyzer()
             setFragmentResult(

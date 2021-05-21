@@ -13,8 +13,10 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import ru.klyuv.barcode.common.convertYuv420888ImageToBitmap
 import ru.klyuv.barcode.common.rotateAndCrop
+import ru.klyuv.barcode.common.toBarcodeModel
 import ru.klyuv.core.common.extensions.sendErrorLog
 import ru.klyuv.core.common.extensions.sendLog
+import ru.klyuv.core.model.BarcodeModel
 import ru.klyuv.core.model.state.CameraHolderState
 
 /**
@@ -41,7 +43,7 @@ import ru.klyuv.core.model.state.CameraHolderState
 class BarCodeImageAnalyzer(
     lifecycle: Lifecycle,
     private val imageCropPercentages: MutableLiveData<CameraHolderState>,
-    private val barCodeDetected: (barCode: String) -> Unit
+    private val barCodeDetected: (barCode: BarcodeModel) -> Unit
 ) : ImageAnalysis.Analyzer {
 
     private val detector = BarcodeScanning.getClient()
@@ -156,7 +158,7 @@ class BarCodeImageAnalyzer(
     }
 
     private fun sendBarCode(barCode: Barcode) {
-        barCodeDetected(barCode.displayValue!!)
+        barCodeDetected(barCode.toBarcodeModel())
     }
 
     private fun getErrorMessage(exception: Exception): String? {
