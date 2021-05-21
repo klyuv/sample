@@ -14,6 +14,7 @@ import ru.klyuv.menu.di.MenuComponent
 import ru.klyuv.sample.App
 import ru.klyuv.sample.di.module.MainActivityModule
 import ru.klyuv.sample.di.module.ViewModelModule
+import ru.klyuv.settings.di.SettingsComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -23,7 +24,8 @@ import javax.inject.Singleton
         DataToolsProvider::class,
         DomainToolsProvider::class,
         MenuComponent::class,
-        BarcodeComponent::class
+        BarcodeComponent::class,
+        SettingsComponent::class
     ],
     modules = [
         AndroidInjectionModule::class,
@@ -46,6 +48,8 @@ interface AppComponent : AndroidInjector<App> {
         fun menu(menuComponent: MenuComponent): Builder
 
         fun barcode(barcodeComponent: BarcodeComponent): Builder
+
+        fun settings(settingsComponent: SettingsComponent): Builder
 
         fun build(): AppComponent
 
@@ -70,12 +74,16 @@ interface AppComponent : AndroidInjector<App> {
                 val barcodeComponent =
                     BarcodeComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
 
+                val settingsComponent =
+                    SettingsComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
+
                 return DaggerAppComponent.builder()
                     .main(mainToolsProvider = mainToolsProvider)
                     .data(dataToolsProvider = dataToolsProvider)
                     .domain(domainToolsProvider = domainToolsProvider)
                     .menu(menuComponent = menuComponent)
                     .barcode(barcodeComponent = barcodeComponent)
+                    .settings(settingsComponent = settingsComponent)
                     .build()
             }
         }

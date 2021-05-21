@@ -4,8 +4,8 @@
         android:id="@id/nav_menu"
         android:icon="@drawable/ic_vector_menu"
         android:title="@string/MENU_MENU" />
-<!--    <item-->
-<!--        android:id="@id/nav_profile"-->
-<!--        android:icon="@drawable/ic_vector_user"-->
-<!--        android:title="@string/MENU_PROFILE" />-->
+    <item
+        android:id="@id/settings_graph"
+        android:icon="@drawable/ic_vector_user"
+        android:title="@string/MENU_SETTINGS" />
 </menu>

@@ -1,5 +1,7 @@
 package ru.klyuv.core.di
 
 import ru.klyuv.core.di.data.SharedPreferenceToolsProvider
+import ru.klyuv.core.di.data.ThemeRequesterToolsProvider
 
-interface DataToolsProvider : SharedPreferenceToolsProvider
+interface DataToolsProvider : SharedPreferenceToolsProvider,
+        ThemeRequesterToolsProvider

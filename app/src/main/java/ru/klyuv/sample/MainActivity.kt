@@ -1,6 +1,7 @@
 package ru.klyuv.sample
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -9,9 +10,15 @@ import ru.klyuv.core.common.extensions.setupWithNavController
 import ru.klyuv.core.common.extensions.toGone
 import ru.klyuv.core.common.extensions.toVisible
 import ru.klyuv.core.common.ui.BaseActivity
+import ru.klyuv.core.model.CurrentTheme
+import ru.klyuv.core.requester.ThemeRequester
 import ru.klyuv.sample.databinding.ActivityMainBinding
+import javax.inject.Inject
 
-class MainActivity : BaseActivity(){
+class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var themeRequester: ThemeRequester
 
     private val viewBinding: ActivityMainBinding by viewBinding(
         ActivityMainBinding::bind,
@@ -23,6 +30,7 @@ class MainActivity : BaseActivity(){
     override fun getLayoutID(): Int = R.layout.activity_main
 
     override fun setUI(savedInstanceState: Bundle?) {
+        initTheme()
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         }
@@ -38,7 +46,7 @@ class MainActivity : BaseActivity(){
 
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = viewBinding.bottomNavView
-        val navGraphsId = listOf(R.navigation.menu_graph)
+        val navGraphsId = listOf(R.navigation.menu_graph, R.navigation.settings_graph)
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottomNavigationView.setupWithNavController(
@@ -51,7 +59,8 @@ class MainActivity : BaseActivity(){
             it.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.menuFragment,
-                    R.id.barcodeListFragment -> showBottomNav()
+                    R.id.barcodeListFragment,
+                    R.id.settingsFragment -> showBottomNav()
                     else -> hideBottomNav()
                 }
             }
@@ -69,4 +78,13 @@ class MainActivity : BaseActivity(){
     private fun showBottomNav() {
         viewBinding.bottomNavView.toVisible()
     }
+
+    private fun initTheme() {
+        when (themeRequester.getCurrentTheme()) {
+            CurrentTheme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            CurrentTheme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            CurrentTheme.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+    }
+
 }

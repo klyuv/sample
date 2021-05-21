@@ -5,7 +5,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import dagger.android.support.DaggerAppCompatActivity
 import ru.klyuv.core.R
-import ru.klyuv.core.common.data.Failure
 
 
 abstract class BaseActivity : DaggerAppCompatActivity() {

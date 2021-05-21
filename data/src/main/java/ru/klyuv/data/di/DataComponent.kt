@@ -4,6 +4,7 @@ import dagger.Component
 import ru.klyuv.core.di.DataToolsProvider
 import ru.klyuv.core.di.MainToolsProvider
 import ru.klyuv.data.di.module.db.SharedPreferenceModule
+import ru.klyuv.data.di.module.request.ThemeModule
 import javax.inject.Singleton
 
 @Singleton
@@ -12,7 +13,8 @@ import javax.inject.Singleton
         MainToolsProvider::class
     ],
     modules = [
-        SharedPreferenceModule::class
+        SharedPreferenceModule::class,
+        ThemeModule::class
     ]
 )
 interface DataComponent : DataToolsProvider {
