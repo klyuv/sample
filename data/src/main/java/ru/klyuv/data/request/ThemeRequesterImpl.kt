@@ -36,7 +36,7 @@ class ThemeRequesterImpl
             else -> sharedPreferencesRepository.setTheme(CurrentTheme.DARK.ordinal)
         }
 
-    private fun changeTheme() {
+    override fun changeTheme() {
         when (getCurrentTheme()) {
             CurrentTheme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             CurrentTheme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

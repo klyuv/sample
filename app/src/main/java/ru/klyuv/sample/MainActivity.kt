@@ -80,11 +80,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initTheme() {
-        when (themeRequester.getCurrentTheme()) {
-            CurrentTheme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            CurrentTheme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            CurrentTheme.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
+        themeRequester.changeTheme()
     }
 
 }

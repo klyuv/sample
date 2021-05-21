@@ -25,7 +25,7 @@ object BarcodeItemDelegate {
                         BarcodeType.TEXT -> R.drawable.ic_vector_barcode
                         BarcodeType.WIFI -> R.drawable.ic_vector_wifi
                         BarcodeType.PHONE -> R.drawable.ic_vector_phone
-                        else -> R.drawable.ic_vector_fullscreen
+                        else -> R.drawable.ic_vector_question
                     }
                 )
             }

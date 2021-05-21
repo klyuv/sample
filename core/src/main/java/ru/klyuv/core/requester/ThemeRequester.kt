@@ -8,4 +8,6 @@ interface ThemeRequester {
 
     fun switchTheme()
 
+    fun changeTheme()
+
 }
