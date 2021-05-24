@@ -22,9 +22,10 @@ object BarcodeItemDelegate {
                 tvBarcodeValue.text = item.value ?: getString(R.string.no_data)
                 ivBarcodeType.setImageResource(
                     when (item.type) {
-                        BarcodeType.TEXT -> R.drawable.ic_vector_barcode
+                        BarcodeType.TEXT -> R.drawable.ic_vector_text
                         BarcodeType.WIFI -> R.drawable.ic_vector_wifi
                         BarcodeType.PHONE -> R.drawable.ic_vector_phone
+                        BarcodeType.PRODUCT -> R.drawable.ic_vector_barcode
                         else -> R.drawable.ic_vector_question
                     }
                 )

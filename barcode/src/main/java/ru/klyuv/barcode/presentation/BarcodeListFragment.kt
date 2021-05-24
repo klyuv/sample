@@ -19,6 +19,7 @@ import ru.klyuv.barcode.presentation.camera.CameraFragment
 import ru.klyuv.core.common.extensions.*
 import ru.klyuv.core.common.ui.BaseFragment
 import ru.klyuv.core.model.BarcodeModel
+import java.util.concurrent.atomic.AtomicBoolean
 
 class BarcodeListFragment : BaseFragment() {
 
@@ -28,6 +29,8 @@ class BarcodeListFragment : BaseFragment() {
     private lateinit var requestPermission: ActivityResultLauncher<String>
 
     override fun getLayoutID(): Int = R.layout.fragment_barcode_list
+
+    private val scanList = AtomicBoolean(false)
 
     private val barcodeAdapter by androidLazy {
         ListDelegationAdapter<List<BarcodeModel>>(
@@ -53,8 +56,13 @@ class BarcodeListFragment : BaseFragment() {
             }
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
             itemTouchHelper.attachToRecyclerView(viewBinding.rvBarcode)
+
+            switchScanList.setOnCheckedChangeListener { _, b ->
+                scanList.set(b)
+            }
         }
         setCameraListener()
+        setCameraListener2()
     }
 
     override fun observeViewModel() {
@@ -74,9 +82,17 @@ class BarcodeListFragment : BaseFragment() {
         }
     }
 
+    private fun setCameraListener2() {
+        setFragmentResultListener(CameraFragment.CAMERA_RESULT_LIST_REQUEST_KEY) { _, bundle ->
+            val data = bundle.getParcelableArrayList<BarcodeModel>(CameraFragment.BARCODE_KEY)
+            if (data != null) viewModel.addBarcodes(data)
+            bundle.clear()
+        }
+    }
+
     private fun openCamera() {
         findNavController().navigate(
-            BarcodeListFragmentDirections.actionBarcodeListFragmentToCameraFragment()
+            BarcodeListFragmentDirections.actionBarcodeListFragmentToCameraFragment(scanList.get())
         )
     }
 

@@ -9,6 +9,8 @@
     <string name="cancel">Отмена</string>
     <string name="settings">Настройки</string>
     <string name="no_data">Нет данных</string>
+    <string name="scanning_barcode_list">Сканировать массив ШК</string>
+    <string name="send">Отправить</string>
 
     <string name="camera_error_permission_message">Приложению необходим доступ к камере.\nПредоставить доступ можно в настройках.</string>
 </resources>

@@ -2,6 +2,7 @@ package ru.klyuv.barcode.presentation.camera
 
 import androidx.lifecycle.MutableLiveData
 import ru.klyuv.core.common.ui.BaseViewModel
+import ru.klyuv.core.model.BarcodeModel
 import ru.klyuv.core.model.state.CameraHolderState
 import javax.inject.Inject
 
@@ -18,5 +19,25 @@ class CameraViewModel
      */
 
     val cropPercentLiveData = MutableLiveData<CameraHolderState>()
+
+    private val barcodeList: MutableList<BarcodeModel> = mutableListOf()
+
+    val barcodesLiveData = MutableLiveData<List<BarcodeModel>>()
+
+    fun addBarcode(barcodeModel: BarcodeModel) {
+        barcodeList.add(barcodeModel)
+        postBarcodesData()
+    }
+
+    fun deleteBarcode(index: Int) {
+        barcodeList.removeAt(index)
+        postBarcodesData()
+    }
+
+    fun getBarcodes() = barcodeList
+
+    private fun postBarcodesData() {
+        barcodesLiveData.value = barcodeList
+    }
 
 }

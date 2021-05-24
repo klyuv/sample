@@ -1,12 +1,14 @@
 package ru.klyuv.barcode.presentation.camera
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Rational
 import android.view.SurfaceHolder
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,14 +19,20 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.mlkit.vision.barcode.Barcode
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import ru.klyuv.barcode.R
 import ru.klyuv.barcode.common.addSurfaceCreatedListener
 import ru.klyuv.barcode.common.aspectRatio
 import ru.klyuv.barcode.databinding.FragmentCameraBinding
+import ru.klyuv.barcode.presentation.BarcodeItemDelegate
+import ru.klyuv.barcode.presentation.SwipeToDeleteCallback
 import ru.klyuv.core.common.extensions.*
 import ru.klyuv.core.common.ui.BaseDialogFullScreenFragment
 import ru.klyuv.core.model.BarcodeModel
@@ -38,6 +46,8 @@ class CameraFragment : BaseDialogFullScreenFragment() {
     private val displayManager by lazy {
         requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
+
+    private val args by navArgs<CameraFragmentArgs>()
 
     private var displayId = -1
     private var preview: Preview? = null
@@ -62,21 +72,49 @@ class CameraFragment : BaseDialogFullScreenFragment() {
 
     private val viewBinding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::bind)
 
+    private val barcodeAdapter by androidLazy {
+        ListDelegationAdapter<List<BarcodeModel>>(
+            BarcodeItemDelegate.init()
+        )
+    }
+
     override fun getLayoutID(): Int = R.layout.fragment_camera
 
     override fun setUI(savedInstanceState: Bundle?) {
         with(viewBinding) {
-            overlay.apply {
-                toVisible()
-                setZOrderOnTop(true)
-                holder.setFormat(PixelFormat.TRANSPARENT)
-                holder.addSurfaceCreatedListener { holder ->
-                    drawOverlay(
-                        holder,
-                        DESIRED_HEIGHT_CROP_PERCENT,
-                        DESIRED_WIDTH_CROP_PERCENT
-                    )
+            btnHolder.toVisibleOrGone(!args.scanList)
+            btnSend.toVisibleOrGone(args.scanList)
+            rvBarcodes.toVisibleOrGone(args.scanList)
+            if (!args.scanList) {
+                overlay.apply {
+                    toVisible()
+                    setZOrderOnTop(true)
+                    holder.setFormat(PixelFormat.TRANSPARENT)
+                    holder.addSurfaceCreatedListener { holder ->
+                        drawOverlay(
+                            holder,
+                            DESIRED_HEIGHT_CROP_PERCENT,
+                            DESIRED_WIDTH_CROP_PERCENT
+                        )
+                    }
                 }
+            } else {
+                btnSend.setOnSingleClickListener { sendCodes() }
+                rvBarcodes.apply {
+                    adapter = barcodeAdapter
+                    layoutManager = LinearLayoutManager(this.context)
+                    setHasFixedSize(true)
+                }
+                val swipeHandler = object : SwipeToDeleteCallback(
+                    requireContext(),
+                    R.drawable.ic_vector_delete
+                ) {
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        viewModel.deleteBarcode(viewHolder.absoluteAdapterPosition)
+                    }
+                }
+                val itemTouchHelper = ItemTouchHelper(swipeHandler)
+                itemTouchHelper.attachToRecyclerView(viewBinding.rvBarcodes)
             }
         }
 
@@ -109,6 +147,7 @@ class CameraFragment : BaseDialogFullScreenFragment() {
 
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraPreview() {
         val metrics = DisplayMetrics().also { viewBinding.viewFinder.display.getRealMetrics(it) }
         val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
@@ -142,8 +181,27 @@ class CameraFragment : BaseDialogFullScreenFragment() {
         cameraProvider?.unbindAll()
 
         try {
+
+            val useCaseGroup = if (args.scanList) {
+                val viewPort =
+                    ViewPort.Builder(
+                        Rational(
+                            viewBinding.viewFinder.width * 30 / 100,
+                            viewBinding.viewFinder.height * 30 / 100
+                        ), rotation
+                    ).build()
+                UseCaseGroup.Builder().addUseCase(preview!!)
+                    .addUseCase(imageAnalyzer!!)
+                    .setViewPort(viewPort)
+                    .build()
+            } else {
+                UseCaseGroup.Builder().addUseCase(preview!!)
+                    .addUseCase(imageAnalyzer!!)
+                    .build()
+            }
+
             camera = cameraProvider?.bindToLifecycle(
-                this, cameraSelector, preview, imageAnalyzer
+                this, cameraSelector, useCaseGroup
             )
             preview?.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
         } catch (e: Exception) {
@@ -177,16 +235,17 @@ class CameraFragment : BaseDialogFullScreenFragment() {
     override fun observeViewModel() {
         observe(viewModel.cropPercentLiveData, ::checkCameraState)
         observe(viewBinding.viewFinder.previewStreamState, ::checkPreviewStreamState)
+        if (args.scanList) observe(viewModel.barcodesLiveData, ::setBarcodeData)
     }
 
     private fun checkPreviewStreamState(state: PreviewView.StreamState) {
         if (state == PreviewView.StreamState.STREAMING) {
             viewBinding.btnFlash.toVisibleOrGone(isFlashAvailable())
 
-            viewModel.cropPercentLiveData.value = CameraHolderState.HolderDraw(
+            viewModel.cropPercentLiveData.value = if (!args.scanList) CameraHolderState.HolderDraw(
                 DESIRED_HEIGHT_CROP_PERCENT,
                 DESIRED_WIDTH_CROP_PERCENT
-            )
+            ) else CameraHolderState.WithoutHolder
 
 
             viewBinding.btnFlash.setOnClickListener { checkTorch() }
@@ -228,10 +287,23 @@ class CameraFragment : BaseDialogFullScreenFragment() {
 
     private fun sendCode(barcode: BarcodeModel) {
         if (this@CameraFragment.isVisible) {
+            if (!args.scanList) {
+                imageAnalyzer?.clearAnalyzer()
+                setFragmentResult(
+                    CAMERA_RESULT_REQUEST_KEY,
+                    bundleOf(BARCODE_KEY to barcode)
+                )
+                dismiss()
+            } else viewModel.addBarcode(barcode)
+        }
+    }
+
+    private fun sendCodes() {
+        if (this@CameraFragment.isVisible && args.scanList) {
             imageAnalyzer?.clearAnalyzer()
             setFragmentResult(
-                CAMERA_RESULT_REQUEST_KEY,
-                bundleOf(BARCODE_KEY to barcode)
+                CAMERA_RESULT_LIST_REQUEST_KEY,
+                bundleOf(BARCODE_KEY to viewModel.getBarcodes())
             )
             dismiss()
         }
@@ -297,6 +369,11 @@ class CameraFragment : BaseDialogFullScreenFragment() {
             canvas.drawRoundRect(rect, cornerRadius, cornerRadius, outlinePaint)
             holder.unlockCanvasAndPost(canvas)
         }
+    }
+
+    private fun setBarcodeData(data: List<BarcodeModel>) {
+        barcodeAdapter.items = data
+        barcodeAdapter.notifyDataSetChanged()
     }
 
     override fun onAttach(context: Context) {
@@ -393,6 +470,7 @@ class CameraFragment : BaseDialogFullScreenFragment() {
         const val DESIRED_WIDTH_CROP_PERCENT = 20
         const val DESIRED_HEIGHT_CROP_PERCENT = 74
         const val CAMERA_RESULT_REQUEST_KEY = "1255"
+        const val CAMERA_RESULT_LIST_REQUEST_KEY = "1256"
         const val BARCODE_KEY = "barcode"
     }
 

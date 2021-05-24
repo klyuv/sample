@@ -57,9 +57,9 @@ class BarCodeImageAnalyzer(
         val mediaImage = image.image ?: return
 
         when (imageCropPercentages.value) {
-            is CameraHolderState.HolderDraw -> checkHolderDrawState(image, mediaImage)
+            is CameraHolderState.HolderDraw -> checkHolderDrawState(image, mediaImage, true)
             is CameraHolderState.Failure -> checkHolderFailureState(image, mediaImage)
-            is CameraHolderState.WithoutHolder -> checkHolderFailureState(image, mediaImage)
+            is CameraHolderState.WithoutHolder -> checkHolderDrawState(image, mediaImage, false)
             null -> {
                 image.close()
                 return
@@ -67,7 +67,7 @@ class BarCodeImageAnalyzer(
         }
     }
 
-    private fun checkHolderDrawState(image: ImageProxy, mediaImage: Image) {
+    private fun checkHolderDrawState(image: ImageProxy, mediaImage: Image, isLiveDataCrop: Boolean) {
         val rotationDegrees = image.imageInfo.rotationDegrees
 
         /**
@@ -82,36 +82,41 @@ class BarCodeImageAnalyzer(
 
         val convertImageToBitmap = mediaImage.convertYuv420888ImageToBitmap()
 
-        val cropRect = Rect(0, 0, imageWidth, imageHeight)
+        val cropRect: Rect
+        if (isLiveDataCrop) {
+            cropRect = Rect(0, 0, imageWidth, imageHeight)
 
-        val liveDataState = imageCropPercentages.value as? CameraHolderState.HolderDraw ?: return
-        if (actualAspectRatio > 3) {
-            val originalHeightCropPercentage = liveDataState.first
-            val originalWidthCropPercentage = liveDataState.second
-            imageCropPercentages.postValue(
-                CameraHolderState.HolderDraw(
-                    originalHeightCropPercentage / 2,
-                    originalWidthCropPercentage
+            val liveDataState = imageCropPercentages.value as? CameraHolderState.HolderDraw ?: return
+            if (actualAspectRatio > 3) {
+                val originalHeightCropPercentage = liveDataState.first
+                val originalWidthCropPercentage = liveDataState.second
+                imageCropPercentages.postValue(
+                    CameraHolderState.HolderDraw(
+                        originalHeightCropPercentage / 2,
+                        originalWidthCropPercentage
+                    )
                 )
+            }
+
+            /**
+             * Если изображение повернуто на 90 или 270 градусов, то при обрезке надо
+             * поменять местами высоту и ширину
+             */
+            val cropPercentages = imageCropPercentages.value as? CameraHolderState.HolderDraw ?: return
+            val heightCropPercent = cropPercentages.first
+            val widthCropPercent = cropPercentages.second
+            val (widthCrop, heightCrop) = when (rotationDegrees) {
+                90, 270 -> Pair(heightCropPercent / 100f, widthCropPercent / 100f)
+                else -> Pair(widthCropPercent / 100f, heightCropPercent / 100f)
+            }
+
+            cropRect.inset(
+                (imageWidth * widthCrop / 2).toInt(),
+                (imageHeight * heightCrop / 2).toInt()
             )
+        } else {
+            cropRect = image.cropRect
         }
-
-        /**
-         * Если изображение повернуто на 90 или 270 градусов, то при обрезке надо
-         * поменять местами высоту и ширину
-         */
-        val cropPercentages = imageCropPercentages.value as? CameraHolderState.HolderDraw ?: return
-        val heightCropPercent = cropPercentages.first
-        val widthCropPercent = cropPercentages.second
-        val (widthCrop, heightCrop) = when (rotationDegrees) {
-            90, 270 -> Pair(heightCropPercent / 100f, widthCropPercent / 100f)
-            else -> Pair(widthCropPercent / 100f, heightCropPercent / 100f)
-        }
-
-        cropRect.inset(
-            (imageWidth * widthCrop / 2).toInt(),
-            (imageHeight * heightCrop / 2).toInt()
-        )
 
         if (cropRect.height() > 0 && cropRect.width() > 0) {
             val croppedBitmap = rotateAndCrop(convertImageToBitmap, rotationDegrees, cropRect)
