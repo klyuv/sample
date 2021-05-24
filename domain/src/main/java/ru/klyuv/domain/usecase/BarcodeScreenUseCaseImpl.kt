@@ -22,8 +22,13 @@ class BarcodeScreenUseCaseImpl
         postBarcodeData()
     }
 
-    override fun deleteBarcode(barcode: BarcodeModel) {
-        barcodeArrayList.remove(barcode)
+    override fun deleteBarcode(barcode: Int) {
+        barcodeArrayList.removeAt(barcode)
+        postBarcodeData()
+    }
+
+    override fun addBarcodes(barcode: List<BarcodeModel>) {
+        barcodeArrayList.addAll(barcode)
         postBarcodeData()
     }
 

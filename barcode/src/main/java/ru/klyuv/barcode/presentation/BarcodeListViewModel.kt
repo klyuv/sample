@@ -16,7 +16,11 @@ class BarcodeListViewModel
         barcodeScreenUseCase.addBarcode(barcode)
     }
 
-    fun deleteBarcode(barcode: BarcodeModel) {
+    fun addBarcodes(barcode: List<BarcodeModel>) {
+        barcodeScreenUseCase.addBarcodes(barcode)
+    }
+
+    fun deleteBarcode(barcode: Int) {
         barcodeScreenUseCase.deleteBarcode(barcode)
     }
 

@@ -9,6 +9,8 @@ interface BarcodeScreenUseCase {
 
     fun addBarcode(barcode: BarcodeModel)
 
-    fun deleteBarcode(barcode: BarcodeModel)
+    fun deleteBarcode(barcode: Int)
+
+    fun addBarcodes(barcode: List<BarcodeModel>)
 
 }

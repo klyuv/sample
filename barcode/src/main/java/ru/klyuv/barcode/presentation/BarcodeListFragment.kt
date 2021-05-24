@@ -7,7 +7,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
@@ -41,7 +43,16 @@ class BarcodeListFragment : BaseFragment() {
                 layoutManager = LinearLayoutManager(this.context)
                 setHasFixedSize(true)
             }
-            TransitionManager.beginDelayedTransition(rvBarcode)
+            val swipeHandler = object: SwipeToDeleteCallback(
+                requireContext(),
+                R.drawable.ic_vector_delete
+            ) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    viewModel.deleteBarcode(viewHolder.absoluteAdapterPosition)
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(viewBinding.rvBarcode)
         }
         setCameraListener()
     }
