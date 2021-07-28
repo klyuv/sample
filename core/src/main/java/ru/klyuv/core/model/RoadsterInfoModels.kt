@@ -3,6 +3,7 @@ package ru.klyuv.core.model
 import android.content.Context
 import androidx.annotation.StringRes
 import ru.klyuv.core.R
+import ru.klyuv.core.common.extensions.formatDate
 
 data class RoadsterInfoModel(
     val flickrImages: List<String>,
@@ -36,14 +37,13 @@ data class RoadsterInfoModel(
                     details = this@RoadsterInfoModel.details,
                     videoUrl = this@RoadsterInfoModel.videoUrl,
                     wikipediaUrl = this@RoadsterInfoModel.wikipediaUrl,
-                    flickrImages = this@RoadsterInfoModel.flickrImages,
-                    launchDate = this@RoadsterInfoModel.launchDate
+                    flickrImages = this@RoadsterInfoModel.flickrImages
                 )
             )
             add(
                 RoadsterCharacterUIModel(
                     R.string.roadster_launch_date,
-                    this@RoadsterInfoModel.launchDate
+                    this@RoadsterInfoModel.launchDate.formatDate()
                 )
             )
             add(
@@ -87,8 +87,7 @@ data class RoadsterMainInfoUIModel(
     val details: String,
     val videoUrl: String,
     val wikipediaUrl: String,
-    val flickrImages: List<String>,
-    val launchDate: String
+    val flickrImages: List<String>
 ) : RoadsterUIModel
 
 data class RoadsterCharacterUIModel(
