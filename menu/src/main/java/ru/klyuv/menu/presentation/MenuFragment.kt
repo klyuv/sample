@@ -17,7 +17,7 @@ import ru.klyuv.menu.R
 import ru.klyuv.menu.databinding.FragmentMenuBinding
 
 
-class MenuFragment: BaseFragment() {
+class MenuFragment : BaseFragment() {
 
     private val viewModel by androidLazy { getViewModel<MenuViewModel>(viewModelFactory) }
     private val viewBinding: FragmentMenuBinding by viewBinding(FragmentMenuBinding::bind)
@@ -58,7 +58,9 @@ class MenuFragment: BaseFragment() {
     private fun onMenuClick(item: MainMenuItem) {
         when (item.id) {
             MainMenuItemId.CAMERA_BARCODE -> openBarcodeListFragment()
-            else -> { }
+            MainMenuItemId.SPACEX_ROADSTER -> openRoadsterInfoFragment()
+            else -> {
+            }
         }
     }
 
@@ -67,4 +69,9 @@ class MenuFragment: BaseFragment() {
             MenuFragmentDirections.actionMenuFragmentToBarcodeListFragment()
         )
     }
+
+    private fun openRoadsterInfoFragment() =
+        findNavController().navigate(
+            MenuFragmentDirections.actionMenuFragmentToRoadsterInfoFragment()
+        )
 }

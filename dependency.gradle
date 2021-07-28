@@ -44,7 +44,7 @@ ext {
     ]
 
     androidxLifecycleImplDependency = [
-            androidxLifecycle       : androidxLifecycleLib
+            androidxLifecycle: androidxLifecycleLib
     ]
 
     domainTestImplDependency = [
@@ -84,6 +84,11 @@ ext {
             adapterDegates4LibViewBinding: adapterDegates4LibViewBinding,
     ]
 
+    adapterDelegateImplDependency = [
+            adapterDelegates4            : adapterDelegates4Lib,
+            adapterDegates4LibViewBinding: adapterDegates4LibViewBinding,
+    ]
+
     biometricImplDependency = [
             biometric: biometric_lib,
     ]
@@ -113,6 +118,10 @@ ext {
 
     appImplDependency = [
             googleAndroidMaterial: googleAndroidMaterialLib
+    ]
+
+    customTabImplDependency = [
+            chromeCustomTab: chrome_custom_tab
     ]
 
 

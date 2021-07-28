@@ -7,31 +7,59 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="ru.klyuv.menu.presentation.MenuFragment"
-        android:label="fragment_menu" >
+        android:label="fragment_menu">
         <action
             android:id="@+id/action_menuFragment_to_barcodeListFragment"
             app:destination="@id/barcodeListFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_roadsterInfoFragment"
+            app:destination="@id/roadsterInfoFragment" />
     </fragment>
 
     <dialog
         android:id="@+id/cameraFragment"
         android:name="ru.klyuv.barcode.presentation.camera.CameraFragment"
-        android:label="fragment_camera"
-        >
+        android:label="fragment_camera">
         <argument
             android:name="scanList"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </dialog>
 
     <fragment
         android:id="@+id/barcodeListFragment"
         android:name="ru.klyuv.barcode.presentation.BarcodeListFragment"
-        android:label="BarcodeFragment"
-        >
+        android:label="BarcodeFragment">
         <action
             android:id="@+id/action_barcodeListFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/roadsterInfoFragment"
+        android:name="ru.klyuv.spacex_roadster.presentation.RoadsterInfoFragment"
+        android:label="@string/MENU_SPACEX_ROADSTER">
+
+        <action
+            android:id="@+id/action_roadsterInfoFragment_to_chromeTest"
+            app:destination="@id/chromeTest" />
+    </fragment>
+
+    <chrome
+        android:id="@+id/chromeTest"
+        android:name="ru.klyuv.core.common.navigation.ChromeCustomTabsNavigator"
+        android:label="chrome_test"
+        app:toolbarColor="@color/colorPrimaryDark">
+
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri"
+            app:nullable="false" />
+
+        <argument
+            android:name="packageName"
+            app:argType="string" />
+
+    </chrome>
 
 </navigation>

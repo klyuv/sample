@@ -3,7 +3,10 @@ package ru.klyuv.data.di
 import dagger.Component
 import ru.klyuv.core.di.DataToolsProvider
 import ru.klyuv.core.di.MainToolsProvider
+import ru.klyuv.data.di.module.SpaceXModule
 import ru.klyuv.data.di.module.db.SharedPreferenceModule
+import ru.klyuv.data.di.module.network.ApiModule
+import ru.klyuv.data.di.module.network.NetworkRequestModule
 import ru.klyuv.data.di.module.request.ThemeModule
 import javax.inject.Singleton
 
@@ -13,8 +16,11 @@ import javax.inject.Singleton
         MainToolsProvider::class
     ],
     modules = [
+        ApiModule::class,
+        NetworkRequestModule::class,
         SharedPreferenceModule::class,
-        ThemeModule::class
+        ThemeModule::class,
+        SpaceXModule::class
     ]
 )
 interface DataComponent : DataToolsProvider {

@@ -1,19 +1,21 @@
 package ru.klyuv.core.model
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 
 interface MenuItem {
-    var title: String
+    var title: Int
 }
 
-class MenuSeparatorItem(override var title: String): MenuItem
+class MenuSeparatorItem(@StringRes override var title: Int) : MenuItem
 
 class MainMenuItem(
     val id: MainMenuItemId,
     @DrawableRes val img: Int,
-    override var title: String
-): MenuItem
+    @StringRes override var title: Int
+) : MenuItem
 
 enum class MainMenuItemId {
-    CAMERA_BARCODE
+    CAMERA_BARCODE,
+    SPACEX_ROADSTER
 }

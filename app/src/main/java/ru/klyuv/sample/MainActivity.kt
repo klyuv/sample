@@ -1,7 +1,6 @@
 package ru.klyuv.sample
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -10,7 +9,6 @@ import ru.klyuv.core.common.extensions.setupWithNavController
 import ru.klyuv.core.common.extensions.toGone
 import ru.klyuv.core.common.extensions.toVisible
 import ru.klyuv.core.common.ui.BaseActivity
-import ru.klyuv.core.model.CurrentTheme
 import ru.klyuv.core.requester.ThemeRequester
 import ru.klyuv.sample.databinding.ActivityMainBinding
 import javax.inject.Inject
@@ -60,7 +58,8 @@ class MainActivity : BaseActivity() {
                 when (destination.id) {
                     R.id.menuFragment,
                     R.id.barcodeListFragment,
-                    R.id.settingsFragment -> showBottomNav()
+                    R.id.settingsFragment,
+                    R.id.roadsterInfoFragment -> showBottomNav()
                     else -> hideBottomNav()
                 }
             }
