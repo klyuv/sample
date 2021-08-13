@@ -46,7 +46,6 @@ class RoadsterInfoFragment : BaseFragment() {
                 setHasFixedSize(true)
             }
         }
-        sendLog("setUI")
     }
 
     override fun observeViewModel() {
@@ -54,7 +53,6 @@ class RoadsterInfoFragment : BaseFragment() {
     }
 
     private fun checkRoadsterState(state: RoadsterState) {
-        sendLog("roadsterState: $state")
         when (state) {
             is RoadsterState.Success -> setSuccessState(state.data)
             is RoadsterState.Loading -> setLoadingState()
@@ -86,21 +84,24 @@ class RoadsterInfoFragment : BaseFragment() {
         viewModel.getData()
     }
 
+    /**
+     * Почему-то на эмуле пакет youTube через PackageManager не находит.
+     */
     private fun openYoutubeLink(youtubeUrl: String) {
-        if (requireContext().isYouTubeInstalled()) {
-            val youtubeID = youtubeUrl.split("/").lastOrNull()
-            if (youtubeID == null) showLongToast("Error")
-            else {
-                try {
-                    val intentApp =
-                        Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://$youtubeID"))
-                    this.startActivity(intentApp)
-                } catch (ex: ActivityNotFoundException) {
-                    openInChromeCustomTab(youtubeUrl)
-                }
+//        if (requireContext().isYouTubeInstalled()) {
+//
+//        } else openInChromeCustomTab(youtubeUrl)
+        val youtubeID = youtubeUrl.split("/").lastOrNull()
+        if (youtubeID == null) openInChromeCustomTab(youtubeUrl)
+        else {
+            try {
+                val intentApp =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://$youtubeID"))
+                this.startActivity(intentApp)
+            } catch (ex: ActivityNotFoundException) {
+                openInChromeCustomTab(youtubeUrl)
             }
-        } else openInChromeCustomTab(youtubeUrl)
-
+        }
     }
 
     private fun openInChromeCustomTab(url: String) {
