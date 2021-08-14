@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.klyuv.core.common.navigation.MyNavHostFragment
 
 /**
  * Manages the various graphs needed for a [BottomNavigationView].
@@ -76,8 +77,10 @@ fun BottomNavigationView.setupWithNavController(
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
             if (selectedItemTag != newlySelectedItemTag) {
                 // Pop everything above the first fragment (the "fixed start destination")
-                fragmentManager.popBackStack(firstFragmentTag,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                fragmentManager.popBackStack(
+                    firstFragmentTag,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
                 val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
                         as NavHostFragment
 
@@ -156,7 +159,8 @@ private fun BottomNavigationView.setupDeepLinks(
         )
         // Handle Intent
         if (navHostFragment.navController.handleDeepLink(intent)
-            && selectedItemId != navHostFragment.navController.graph.id) {
+            && selectedItemId != navHostFragment.navController.graph.id
+        ) {
             this.selectedItemId = navHostFragment.navController.graph.id
         }
     }
@@ -214,7 +218,7 @@ private fun obtainNavHostFragment(
     existingFragment?.let { return it }
 
     // Otherwise, create it and return it.
-    val navHostFragment = NavHostFragment.create(navGraphId)
+    val navHostFragment = MyNavHostFragment.create(navGraphId)
     fragmentManager.beginTransaction()
         .add(containerId, navHostFragment, fragmentTag)
         .commitNow()

@@ -42,7 +42,6 @@ android {
 
 dependencies {
 
-
     kotlinImplDependency.each { dep -> implementation dep.value }
     androidxAppCompatImplDependency.each { dep -> implementation dep.value }
     presentationImplDependency.each { dep -> implementation dep.value }
@@ -56,5 +55,6 @@ dependencies {
     implementation project(':menu')
     implementation project(':barcode')
     implementation project(':settings')
+    implementation project(':spacex_roadster')
 
 }

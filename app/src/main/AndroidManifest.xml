@@ -3,6 +3,7 @@
     package="ru.klyuv.sample">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -20,5 +21,11 @@
             </intent-filter>
         </activity>
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
 
 </manifest>

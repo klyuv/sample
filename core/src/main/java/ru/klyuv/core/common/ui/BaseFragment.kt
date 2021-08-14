@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import dagger.android.support.DaggerFragment
+import ru.klyuv.core.R
+import ru.klyuv.core.common.data.NetworkFailure
+import ru.klyuv.core.common.extensions.showAlertMessageWithoutNegativeButton
+import ru.klyuv.core.common.extensions.showLongToast
 import javax.inject.Inject
 
 abstract class BaseFragment : DaggerFragment() {
@@ -34,62 +39,115 @@ abstract class BaseFragment : DaggerFragment() {
 
     protected abstract fun observeViewModel()
 
-//    fun showFailureError(failure: Failure, action: () -> Unit = {}) {
-//        when (failure) {
-//            is Failure.NetworkConnection -> showAlertMessageWithoutNegativeButton(
-//                getString(R.string.ERROR),
-//                getString(R.string.ERROR_CHECK_INTERNET),
-//                true,
-//                action
-//            )
-//            is Failure.HTTP401 -> if (failure.error.isNotEmpty()) showLongToast(failure.error)
-//            is Failure.HTTP401v2 -> if (failure.errorMessage.firstIsNotEmpty())
-//                showLongToast(
-//                    getString(
-//                        R.string.ERROR_FAILED,
-//                        failure.errorMessage.getFirstMessageWithDetail()
-//                    )
-//                )
-//            is Failure.HTTP422 -> if (failure.errorMessage.firstIsNotEmpty())
-//                showAlertMessageWithoutNegativeButton(
-//                    getString(R.string.ERROR),
-//                    failure.errorMessage.getFirstMessageWithDetailLn(),
-//                    true,
-//                    action
-//                )
-//            is Failure.TIMEOUT -> showLongToast(getString(R.string.ERROR_TIMEOUT))
-//            is Failure.SimpleFailureRes -> showLongToast(getString(failure.error))
-//            is Failure.HTTP204 -> showShortToast(getString(R.string.no_data))
-//            is Failure.SimpleFailure -> showLongToast(failure.error)
-//            is Failure.HTTP400 -> if (failure.errorMessage.firstIsNotEmpty())
-//                showAlertMessageWithoutNegativeButton(
-//                    getString(R.string.ERROR),
-//                    failure.errorMessage.getFirstMessageWithDetailLn(),
-//                    true,
-//                    action
-//                )
-//            is Failure.HTTP403 -> if (failure.errorMessage.firstIsNotEmpty())
-//                showAlertMessageWithoutNegativeButton(
-//                    getString(R.string.ERROR),
-//                    getString(R.string.ERROR_NO_ACCESS),
-//                    true,
-//                    action
-//                )
-//            is Failure.HTTP500 -> showAlertMessageWithoutNegativeButton(
-//                getString(R.string.ERROR),
-//                getString(R.string.ERROR_500),
-//                true,
-//                action
-//            )
-//            is Failure.SimpleFailureResWithDismissDialog -> showLongToast(getString(failure.error))
-//            is Failure.SimpleFailureResWithShowAlertDialog -> showAlertMessageWithoutNegativeButton(
-//                getString(R.string.ERROR),
-//                getString(failure.error),
-//                true,
-//                action
-//            )
-//            else -> showLongToast(getString(R.string.ERROR_UNKNOWN))
-//        }
-//    }
+    fun showFailureError(failure: NetworkFailure, action: () -> Unit = {}) {
+        when (failure) {
+            is NetworkFailure.NetworkConnection -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_CHECK_INTERNET),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP401 -> showLongToast(getString(R.string.ERROR_401_MESSAGE))
+            is NetworkFailure.HTTP422 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_422_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.TIMEOUT -> showLongToast(getString(R.string.ERROR_TIMEOUT))
+            is NetworkFailure.HTTP400 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_400_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP403 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_403_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP500 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_500_MESSAGE),
+                true,
+                action
+            )
+            else -> showLongToast(getString(R.string.ERROR_UNKNOWN))
+        }
+    }
+
+}
+
+abstract class BaseFragmentV2<T : ViewBinding> : DaggerFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private var _viewBinding: T? = null
+    val viewBinding get() = _viewBinding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _viewBinding = getViewBinding(inflater, container)
+        return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUI(savedInstanceState)
+        observeViewModel()
+    }
+
+    protected abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): T
+
+    protected abstract fun setUI(savedInstanceState: Bundle?)
+
+    protected abstract fun observeViewModel()
+
+    fun showFailureError(failure: NetworkFailure, action: () -> Unit = {}) {
+        when (failure) {
+            is NetworkFailure.NetworkConnection -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_CHECK_INTERNET),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP401 -> showLongToast(getString(R.string.ERROR_401_MESSAGE))
+            is NetworkFailure.HTTP422 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_422_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.TIMEOUT -> showLongToast(getString(R.string.ERROR_TIMEOUT))
+            is NetworkFailure.HTTP400 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_400_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP403 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_403_MESSAGE),
+                true,
+                action
+            )
+            is NetworkFailure.HTTP500 -> showAlertMessageWithoutNegativeButton(
+                getString(R.string.ERROR),
+                getString(R.string.ERROR_500_MESSAGE),
+                true,
+                action
+            )
+            else -> showLongToast(getString(R.string.ERROR_UNKNOWN))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _viewBinding = null
+    }
 
 }

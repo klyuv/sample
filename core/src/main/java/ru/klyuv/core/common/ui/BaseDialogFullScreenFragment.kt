@@ -54,48 +54,48 @@ abstract class BaseDialogFullScreenFragment : DaggerAppCompatDialogFragment() {
 
 //    fun showFailureError(failure: Failure) {
 //        when (failure) {
-//            is Failure.NetworkConnection -> showLongToast(getString(ru.wildberries.core.R.string.ERROR_CHECK_INTERNET))
+//            is Failure.NetworkConnection -> showLongToast(getString(R.string.ERROR_CHECK_INTERNET))
 //            is Failure.HTTP401 -> if (failure.error.isNotEmpty()) showLongToast(failure.error)
 //            is Failure.HTTP401v2 -> if (failure.errorMessage.firstIsNotEmpty())
 //                showLongToast(
 //                    getString(
-//                        ru.wildberries.core.R.string.ERROR_FAILED,
+//                        R.string.ERROR_FAILED,
 //                        failure.errorMessage.getFirstMessageWithDetail()
 //                    )
 //                )
 //            is Failure.HTTP422 -> if (failure.errorMessage.firstIsNotEmpty())
 //                showAlertMessageWithoutNegativeButton(
-//                    getString(ru.wildberries.core.R.string.ERROR),
+//                    getString(R.string.ERROR),
 //                    failure.errorMessage.getFirstMessageWithDetailLn(),
 //                    true
 //                )
 //            is Failure.TIMEOUT -> showLongToast(getString(R.string.ERROR_TIMEOUT))
 //            is Failure.SimpleFailureRes -> showLongToast(getString(failure.error))
-//            is Failure.HTTP204 -> showShortToast(getString(ru.wildberries.core.R.string.no_data))
+//            is Failure.HTTP204 -> showShortToast(getString(R.string.no_data))
 //            is Failure.SimpleFailure -> showLongToast(failure.error)
 //            is Failure.HTTP400 -> if (failure.errorMessage.firstIsNotEmpty())
 //                showAlertMessageWithoutNegativeButton(
-//                    getString(ru.wildberries.core.R.string.ERROR),
+//                    getString(R.string.ERROR),
 //                    failure.errorMessage.getFirstMessageWithDetailLn(),
 //                    true
 //                )
 //            is Failure.HTTP403 -> if (failure.errorMessage.firstIsNotEmpty())
 //                showAlertMessageWithoutNegativeButton(
-//                    getString(ru.wildberries.core.R.string.ERROR),
-//                    getString(ru.wildberries.core.R.string.ERROR_NO_ACCESS),
+//                    getString(string.ERROR),
+//                    getString(R.string.ERROR_NO_ACCESS),
 //                    true
 //                )
 //            is Failure.HTTP500 -> showAlertMessageWithoutNegativeButton(
-//                getString(ru.wildberries.core.R.string.ERROR),
-//                getString(ru.wildberries.core.R.string.ERROR_500)
+//                getStringR.string.ERROR),
+//                getString(R.string.ERROR_500)
 //            )
 //            is Failure.SimpleFailureResWithDismissDialog -> showLongToast(getString(failure.error))
 //            is Failure.SimpleFailureResWithShowAlertDialog -> showAlertMessageWithoutNegativeButton(
-//                getString(ru.wildberries.core.R.string.ERROR),
+//                getString(R.string.ERROR),
 //                getString(failure.error),
 //                true
 //            )
-//            else -> showLongToast(getString(ru.wildberries.core.R.string.ERROR_UNKNOWN))
+//            else -> showLongToast(getString(R.string.ERROR_UNKNOWN))
 //        }
 //    }
 

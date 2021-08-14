@@ -7,11 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.RequestOptions
 import ru.klyuv.core.common.ui.SingleClickListener
 
 
@@ -35,24 +43,24 @@ fun View.toVisibleOrInvisible(status: Boolean) {
     this.visibility = if (status) View.VISIBLE else View.INVISIBLE
 }
 
-//fun ImageView.loadImage(@DrawableRes resId: Int) =
-//    Glide.with(context).load(resId)
-//        .apply(RequestOptions().override(this.width, this.height))
-//        .into(this)
+fun ImageView.loadImage(@DrawableRes resId: Int) =
+    Glide.with(context).load(resId)
+        .apply(RequestOptions().override(this.width, this.height))
+        .into(this)
 
-//fun ImageView.loadImgWithCache(url: String?, @DrawableRes errorDrawable: Int) {
-//    if (!url.isNullOrEmpty()) Glide.with(this)
-//        .load(GlideUrl(url))
-//        .apply(
-//            RequestOptions()
-//                .fitCenter()
-//                .error(errorDrawable)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .priority(Priority.HIGH)
-//        )
-//        .into(this)
-//    else setImageDrawable(resources.getDrawable(errorDrawable, null))
-//}
+fun ImageView.loadImgWithCache(url: String?, @DrawableRes errorDrawable: Int) {
+    if (!url.isNullOrEmpty()) Glide.with(this)
+        .load(GlideUrl(url))
+        .apply(
+            RequestOptions()
+                .centerCrop()
+                .error(errorDrawable)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH)
+        )
+        .into(this)
+    else setImageDrawable(ResourcesCompat.getDrawable(resources, errorDrawable, null))
+}
 
 //fun ImageView.setByteArrayWithoutCache(data: ByteArray, @DrawableRes errorDrawable: Int) {
 //    if (data.isNotEmpty()) Glide.with(this)

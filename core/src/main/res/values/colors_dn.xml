@@ -12,5 +12,6 @@
     <color name="colorAccent">@color/teal_200</color>
 
     <color name="colorImage">@color/black</color>
+    <color name="colorText">@color/black</color>
 
 </resources>

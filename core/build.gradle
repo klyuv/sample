@@ -36,6 +36,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -44,6 +48,9 @@ dependencies {
     androidxAppCompatImplDependency.each { dep -> implementation dep.value }
     coreImplDependency.each { dep -> implementation dep.value }
     daggerImplDependency.each { dep -> implementation dep.value }
+    glideImplDependency.each { dep -> implementation dep.value }
+    customTabImplDependency.each { dep -> implementation dep.value }
+    adapterDelegateImplDependency.each { dep -> implementation dep.value }
     daggerKaptDependency.each { dep -> kapt dep.value }
     presentationImplDependency.each { dep -> implementation dep.value }
 
