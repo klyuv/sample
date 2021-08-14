@@ -23,7 +23,7 @@ object MainMenuItemDelegate {
         bind {
             binding.llItemContainer.setOnSingleClickListener { menuItemClick(item) }
             with(binding) {
-                tvTitle.text = item.title
+                tvTitle.text = getString(item.title)
                 ivItem.setImageResource(item.img)
 
             }

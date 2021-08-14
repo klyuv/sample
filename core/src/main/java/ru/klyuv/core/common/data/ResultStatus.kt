@@ -96,32 +96,34 @@ sealed class Failure {
 
     class SimpleFailureRes(@StringRes val error: Int) : Failure()
 
-    object ServerFailure : Failure()
-
-    object NetworkConnection : Failure()
-
-    class HTTP401(val error: String) : Failure()
-
-    object HTTP403 : Failure()
-
-    object HTTP204 : Failure()
-
-    object HTTP500 : Failure()
-
-    object TIMEOUT : Failure()
-
-    class HTTPUnknown(val error: Throwable) : Failure()
-
-    class Unknown(val error: Throwable) : Failure()
-
-    object Ignore : Failure()
-
-    object HTTP422 : Failure()
-
-    object HTTP400 : Failure()
-
     class SimpleFailureResWithDismissDialog(@StringRes val error: Int) : Failure()
 
     class SimpleFailureResWithShowAlertDialog(@StringRes val error: Int) : Failure()
 
 }
+
+sealed class NetworkFailure {
+    object NetworkConnection : NetworkFailure()
+
+    object HTTP401 : NetworkFailure()
+
+    object HTTP403 : NetworkFailure()
+
+    object HTTP500 : NetworkFailure()
+
+    object TIMEOUT : NetworkFailure()
+
+    class HTTPUnknown(val error: Throwable) : NetworkFailure()
+
+    class Unknown(val error: Throwable) : NetworkFailure()
+
+    object Ignore : NetworkFailure()
+
+    object HTTP422 : NetworkFailure()
+
+    object HTTP400 : NetworkFailure()
+}
+
+class MainFailureModel(
+    val failure: NetworkFailure, var show: Boolean = true
+)

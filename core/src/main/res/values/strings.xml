@@ -2,8 +2,12 @@
     <string name="app_name">SampleApp</string>
 
     <string name="MENU_MENU">Меню</string>
-    <string name="MENU_SETTINGS">Меню</string>
+    <string name="MENU_SETTINGS">Профиль</string>
     <string name="MENU_CAMERA">Сканер штрихкодов</string>
+    <string name="MENU_SPACEX_ROADSTER">Roadster Info</string>
+
+    <string name="camera">Камера</string>
+    <string name="SpaceX">SpaceX</string>
 
     <string name="attention">Внимание!</string>
     <string name="cancel">Отмена</string>
@@ -12,5 +16,31 @@
     <string name="scanning_barcode_list">Сканировать массив ШК</string>
     <string name="send">Отправить</string>
 
+    <string name="ok">Ок</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+
     <string name="camera_error_permission_message">Приложению необходим доступ к камере.\nПредоставить доступ можно в настройках.</string>
+
+    <string name="roadster_launch_date">Дата запуска</string>
+    <string name="roadster_launch_mass">Масса</string>
+    <string name="roadster_orbit_type">Тип орбиты</string>
+    <string name="roadster_speed_kph">Скорость</string>
+    <string name="roadster_earth_distance_km">Расстояние до Земли</string>
+    <string name="roadster_mars_distance_km">Расстояние до Марса</string>
+
+    <string name="kph">%f км/ч</string>
+    <string name="kg">%d кг</string>
+    <string name="km">%f км</string>
+
+    <!--    ERROR'S-->
+    <string name="ERROR">Ошибка</string>
+    <string name="ERROR_CHECK_INTERNET">Проверьте подключение к интернету</string>
+    <string name="ERROR_TIMEOUT">Превышено время ожидания ответа</string>
+    <string name="ERROR_400_MESSAGE">400 ошибка</string>
+    <string name="ERROR_401_MESSAGE">401 ошибка</string>
+    <string name="ERROR_403_MESSAGE">403 ошибка</string>
+    <string name="ERROR_422_MESSAGE">422 ошибка</string>
+    <string name="ERROR_500_MESSAGE">500 ошибка</string>
+    <string name="ERROR_UNKNOWN">Неизвестная ошибка</string>
 </resources>

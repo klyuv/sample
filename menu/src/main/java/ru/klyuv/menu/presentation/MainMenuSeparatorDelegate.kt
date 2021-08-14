@@ -20,7 +20,7 @@ object MainMenuSeparatorDelegate {
         ) {
             bind {
                 with(binding) {
-                    tvTitle.text = item.title
+                    tvTitle.text = getString(item.title)
                 }
             }
         }
