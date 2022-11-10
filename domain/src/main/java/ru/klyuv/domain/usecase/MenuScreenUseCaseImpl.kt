@@ -29,6 +29,14 @@ class MenuScreenUseCaseImpl
                 R.string.MENU_CAMERA
             )
         )
+        menu.add(
+            MainMenuItem(
+                MainMenuItemId.STICKY_BOTTOM,
+                R.drawable.ic_vector_text,
+                R.string.MENU_STICKY_BOTTOM
+            )
+        )
+
         menu.add(MenuSeparatorItem(R.string.SpaceX))
 
         menu.add(

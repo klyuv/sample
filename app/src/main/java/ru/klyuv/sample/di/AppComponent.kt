@@ -16,6 +16,7 @@ import ru.klyuv.sample.di.module.MainActivityModule
 import ru.klyuv.sample.di.module.ViewModelModule
 import ru.klyuv.settings.di.SettingsComponent
 import ru.klyuv.spacex_roadster.di.RoadsterComponent
+import ru.klyuv.stickybottom.di.StickyBottomComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -27,7 +28,8 @@ import javax.inject.Singleton
         MenuComponent::class,
         BarcodeComponent::class,
         SettingsComponent::class,
-        RoadsterComponent::class
+        RoadsterComponent::class,
+        StickyBottomComponent::class
     ],
     modules = [
         AndroidInjectionModule::class,
@@ -54,6 +56,8 @@ interface AppComponent : AndroidInjector<App> {
         fun settings(settingsComponent: SettingsComponent): Builder
 
         fun roadster(roadsterComponent: RoadsterComponent): Builder
+
+        fun stickyBottom(stickyBottomComponent: StickyBottomComponent): Builder
 
         fun build(): AppComponent
 
@@ -84,6 +88,9 @@ interface AppComponent : AndroidInjector<App> {
                 val roadsterComponent =
                     RoadsterComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
 
+                val stickyBottomComponent =
+                    StickyBottomComponent.Initializer.init(domainToolsProvider, mainToolsProvider)
+
                 return DaggerAppComponent.builder()
                     .main(mainToolsProvider = mainToolsProvider)
                     .data(dataToolsProvider = dataToolsProvider)
@@ -92,6 +99,7 @@ interface AppComponent : AndroidInjector<App> {
                     .barcode(barcodeComponent = barcodeComponent)
                     .settings(settingsComponent = settingsComponent)
                     .roadster(roadsterComponent = roadsterComponent)
+                    .stickyBottom(stickyBottomComponent = stickyBottomComponent)
                     .build()
             }
         }

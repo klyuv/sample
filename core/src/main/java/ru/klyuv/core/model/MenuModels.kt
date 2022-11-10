@@ -17,5 +17,6 @@ class MainMenuItem(
 
 enum class MainMenuItemId {
     CAMERA_BARCODE,
-    SPACEX_ROADSTER
+    SPACEX_ROADSTER,
+    STICKY_BOTTOM
 }

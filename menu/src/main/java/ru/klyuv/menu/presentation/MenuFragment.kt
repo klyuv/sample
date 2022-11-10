@@ -61,6 +61,7 @@ class MenuFragment : BaseFragmentV2<FragmentMenuBinding>() {
         when (item.id) {
             MainMenuItemId.CAMERA_BARCODE -> openBarcodeListFragment()
             MainMenuItemId.SPACEX_ROADSTER -> openRoadsterInfoFragment()
+            MainMenuItemId.STICKY_BOTTOM -> openStickyBottomFragment()
             else -> {
             }
         }
@@ -75,5 +76,10 @@ class MenuFragment : BaseFragmentV2<FragmentMenuBinding>() {
     private fun openRoadsterInfoFragment() =
         findNavController().navigate(
             MenuFragmentDirections.actionMenuFragmentToRoadsterInfoFragment()
+        )
+
+    private fun openStickyBottomFragment() =
+        findNavController().navigate(
+            MenuFragmentDirections.actionMenuFragmentToStickyBottomFragment()
         )
 }

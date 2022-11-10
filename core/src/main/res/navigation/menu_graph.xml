@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_menuFragment_to_roadsterInfoFragment"
             app:destination="@id/roadsterInfoFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_stickyBottomFragment"
+            app:destination="@id/stickyBottomFragment" />
     </fragment>
 
     <dialog
@@ -44,6 +47,12 @@
             android:id="@+id/action_roadsterInfoFragment_to_chromeTest"
             app:destination="@id/chromeTest" />
     </fragment>
+
+    <fragment
+        android:id="@+id/stickyBottomFragment"
+        android:name="ru.klyuv.stickybottom.presentation.StickyBottomFragment"
+        android:label="@string/MENU_STICKY_BOTTOM"
+        />
 
     <chrome
         android:id="@+id/chromeTest"

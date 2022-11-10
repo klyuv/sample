@@ -8,6 +8,7 @@ import ru.klyuv.core.di.FragmentScope
 import ru.klyuv.menu.presentation.MenuFragment
 import ru.klyuv.settings.presentation.SettingsFragment
 import ru.klyuv.spacex_roadster.presentation.RoadsterInfoFragment
+import ru.klyuv.stickybottom.presentation.StickyBottomFragment
 
 @Suppress("unused")
 @Module
@@ -32,5 +33,9 @@ interface FragmentModule {
     @FragmentScope
     @ContributesAndroidInjector
     fun contributeRoadsterInfoFragment(): RoadsterInfoFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    fun contributeStickyBottomFragment(): StickyBottomFragment
 
 }

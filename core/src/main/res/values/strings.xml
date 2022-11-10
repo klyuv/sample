@@ -5,6 +5,7 @@
     <string name="MENU_SETTINGS">Профиль</string>
     <string name="MENU_CAMERA">Сканер штрихкодов</string>
     <string name="MENU_SPACEX_ROADSTER">Roadster Info</string>
+    <string name="MENU_STICKY_BOTTOM">Sticky bottom</string>
 
     <string name="camera">Камера</string>
     <string name="SpaceX">SpaceX</string>

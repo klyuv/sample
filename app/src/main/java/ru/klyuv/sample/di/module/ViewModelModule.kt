@@ -5,6 +5,7 @@ import ru.klyuv.barcode.di.BarcodeModule
 import ru.klyuv.menu.di.MenuModule
 import ru.klyuv.settings.di.SettingsModule
 import ru.klyuv.spacex_roadster.di.RoadsterInfoModule
+import ru.klyuv.stickybottom.di.StickyBottomModule
 
 @Suppress("unused")
 @Module(
@@ -12,7 +13,8 @@ import ru.klyuv.spacex_roadster.di.RoadsterInfoModule
         MenuModule::class,
         BarcodeModule::class,
         SettingsModule::class,
-        RoadsterInfoModule::class
+        RoadsterInfoModule::class,
+        StickyBottomModule::class
     ]
 )
 interface ViewModelModule
