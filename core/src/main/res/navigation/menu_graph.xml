@@ -52,6 +52,15 @@
         android:id="@+id/stickyBottomFragment"
         android:name="ru.klyuv.stickybottom.presentation.StickyBottomFragment"
         android:label="@string/MENU_STICKY_BOTTOM"
+        >
+        <action
+            android:id="@+id/action_stickyBottomFragment_to_stickyBottomSheetFragment"
+            app:destination="@id/stickyBottomSheetFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/stickyBottomSheetFragment"
+        android:name="ru.klyuv.stickybottom.presentation.bottom.StickyBottomSheetDialogFragment"
         />
 
     <chrome

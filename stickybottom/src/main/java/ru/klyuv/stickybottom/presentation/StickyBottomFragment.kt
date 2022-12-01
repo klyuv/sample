@@ -3,6 +3,7 @@ package ru.klyuv.stickybottom.presentation
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import ru.klyuv.core.common.extensions.androidLazy
 import ru.klyuv.core.common.extensions.getViewModel
 import ru.klyuv.core.common.ui.BaseFragmentV2
@@ -18,7 +19,11 @@ class StickyBottomFragment: BaseFragmentV2<FragmentStickyBottomBinding>() {
     ): FragmentStickyBottomBinding = FragmentStickyBottomBinding.inflate(layoutInflater, container, false)
 
     override fun setUI(savedInstanceState: Bundle?) {
-        Unit
+        viewBinding.test.setOnClickListener {
+            findNavController().navigate(
+                StickyBottomFragmentDirections.actionStickyBottomFragmentToStickyBottomSheetFragment()
+            )
+        }
     }
 
     override fun observeViewModel() {

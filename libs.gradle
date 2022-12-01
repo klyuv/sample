@@ -22,7 +22,7 @@ ext {
 
     androidx_lifecycle_version = '2.2.0'
     androidx_app_compat_version = '1.2.0'
-    androidx_constraint_layout_version = '2.0.4'
+    androidx_constraint_layout_version = '2.1.2'
     androidx_recyclerview_version = '1.2.0'
     androidx_swiperefreshlayout_version = '1.2.0-alpha01'
     androidxLifecycleLib = "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
